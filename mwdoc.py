@@ -85,7 +85,7 @@ class Documentation(object):
         pages = self.site.allpages(prefix=prefix_without_ns, namespace=namespace)
         return pages
   
-    def versionPages(self, sourceVersion, targetVersion, prefixes = []):
+    def versionPages(self, sourceVersion, targetVersion, prefixes = None):
         """Create a new version of given documention set
 
         A documentation set correspond to a collection of pages identified by a
@@ -101,13 +101,13 @@ class Documentation(object):
         'Documentation/0.2' and
         'Template:Documentation/0.2'.
         """
+        prefixes = prefixes or []
         results = []
         for prefix in prefixes:
             prefix_without_ns = mwclient.page.Page.strip_namespace(prefix)
             sourcePages = self.listPages(os.path.join(prefix_without_ns, sourceVersion))
             for sourcePage in sourcePages:
                 sourcePageNamePrefix = os.path.join(prefix, sourceVersion)
-                targetPageNamePrefix = os.path.join(prefix, targetVersion)
                 targetPageBaseName = re.sub(r'^'+sourcePageNamePrefix+'\/', '', sourcePage.name)
                 results.append(self.versionPage(sourceVersion, targetVersion, targetPageBaseName, prefix))
         return results
