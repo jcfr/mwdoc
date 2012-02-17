@@ -1,5 +1,4 @@
 import unittest
-import os
 import random
 import getpass
 from mwdoc import Documentation
@@ -42,10 +41,10 @@ class TestDocumentation(unittest.TestCase):
         version = '0.1'
         self.assertTrue(doc.createPage(version, pagename, 'This is page %s' % pagename, self.prefix))
     
-        pages = doc.listPages(os.path.join(self.prefix, version))
+        pages = doc.listPages('/'.join((self.prefix, version)))
         for page in pages:
             self.assertFalse(pages.count > 1)
-            self.assertEqual(page.name, os.path.join(self.prefix, version, pagename))
+            self.assertEqual(page.name, '/'.join((self.prefix, version, pagename)))
         self.assertEqual(pages.count, 1)
     
     def test_listPagesAsTemplate(self):
@@ -57,10 +56,10 @@ class TestDocumentation(unittest.TestCase):
         version = '0.1'
         self.assertTrue(doc.createPage(version, pagename, 'This is page %s' % pagename, templatePrefix))
 
-        pages = doc.listPages(os.path.join(templatePrefix, version))
+        pages = doc.listPages('/'.join((templatePrefix, version)))
         for page in pages:
             self.assertFalse(pages.count > 1)
-            self.assertEqual(page.name, os.path.join(templatePrefix, version, pagename))
+            self.assertEqual(page.name, '/'.join((templatePrefix, version, pagename)))
         self.assertEqual(pages.count, 1)
           
     def test_versionPages(self):
