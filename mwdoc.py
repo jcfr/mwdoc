@@ -1,6 +1,4 @@
 import mwclient
-import os.path
-import re
 
 class Documentation(object):
   
@@ -37,7 +35,7 @@ class Documentation(object):
     
         If no summary is provided, it will default to 'Create page <fullpath>'
         """
-        pageFullPath = os.path.join(prefix, version, pageName)
+        pageFullPath = '/'.join((prefix, version, pageName))
         page = self.site.Pages[pageFullPath]
         if page.exists:
             if self.VERBOSE:
@@ -59,7 +57,7 @@ class Documentation(object):
         The summary associated with each page will be '<versionSource> ->
         <versionTarget>'
         """
-        pageFullPath = os.path.join(prefix, sourceVersion, pageBaseName)
+        pageFullPath = '/'.join((prefix, sourceVersion, pageBaseName))
         sourcePage = self.site.Pages[pageFullPath]
         if not sourcePage.exists:
             if self.VERBOSE:
@@ -104,11 +102,10 @@ class Documentation(object):
         prefixes = prefixes or []
         results = []
         for prefix in prefixes:
-            prefix_without_ns = mwclient.page.Page.strip_namespace(prefix)
-            sourcePages = self.listPages(os.path.join(prefix_without_ns, sourceVersion))
+            sourcePageNamePrefix = '/'.join((prefix, sourceVersion))
+            sourcePages = self.listPages(sourcePageNamePrefix)
             for sourcePage in sourcePages:
-                sourcePageNamePrefix = os.path.join(prefix, sourceVersion)
-                targetPageBaseName = re.sub(r'^'+sourcePageNamePrefix+'\/', '', sourcePage.name)
+                targetPageBaseName = sourcePage.name.split(sourcePageNamePrefix + '/')[1]
                 results.append(self.versionPage(sourceVersion, targetVersion, targetPageBaseName, prefix))
         return results
 
