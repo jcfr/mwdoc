@@ -35,7 +35,10 @@ class Documentation(object):
     
         If no summary is provided, it will default to 'Create page <fullpath>'
         """
-        pageFullPath = '/'.join((prefix, version, pageName))
+        if len(pageName) == 0:
+            pageFullPath = '/'.join((prefix, version))
+        else:
+            pageFullPath = '/'.join((prefix, version, pageName))
         page = self.site.Pages[pageFullPath]
         if page.exists:
             if self.VERBOSE:
@@ -57,7 +60,10 @@ class Documentation(object):
         The summary associated with each page will be '<versionSource> ->
         <versionTarget>'
         """
-        pageFullPath = '/'.join((prefix, sourceVersion, pageBaseName))
+        if len(pageBaseName) == 0:
+            pageFullPath = '/'.join((prefix, sourceVersion))
+        else:
+            pageFullPath = '/'.join((prefix, sourceVersion, pageBaseName))
         sourcePage = self.site.Pages[pageFullPath]
         if not sourcePage.exists:
             if self.VERBOSE:
@@ -105,7 +111,10 @@ class Documentation(object):
             sourcePageNamePrefix = '/'.join((prefix, sourceVersion))
             sourcePages = self.listPages(sourcePageNamePrefix)
             for sourcePage in sourcePages:
-                targetPageBaseName = sourcePage.name.split(sourcePageNamePrefix + '/')[1]
+                parts = sourcePage.name.split(sourcePageNamePrefix + '/')
+                targetPageBaseName = ''
+                if len(parts) == 2:
+                  targetPageBaseName = parts[1]
                 results.append(self.versionPage(sourceVersion, targetVersion, targetPageBaseName, prefix))
         return results
 
