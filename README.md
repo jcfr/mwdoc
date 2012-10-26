@@ -82,9 +82,9 @@ Installation
 Test
 ----
 
-1. [Download test_mwdoc.py][test_mwdoc] (`wget https://raw.github.com/jcfr/mwdoc/master/test_mwdoc.py`)
+1. [Download mwdoc_test.py][mwdoc_test] (`wget https://raw.github.com/jcfr/mwdoc/master/mwdoc_test.py`)
 2. Place it along side with `mwdoc.py`
-3. Edit *host*, *path*, *username* and *password* in test_mwdoc.py 
+3. Edit *host*, *path*, *username* and *password* in mwdoc_test.py 
 4. Run mwdoc.py (`$ python mwdoc.py`)
 
 
@@ -127,5 +127,5 @@ limitations under the License.
 [mwclient]: http://sourceforge.net/apps/mediawiki/mwclient
 [mwapi]: https://www.mediawiki.org/wiki/API
 [mwdoc]: https://raw.github.com/jcfr/mwdoc/master/mwdoc.py
-[test_mwdoc]: https://raw.github.com/jcfr/mwdoc/master/test_mwdoc.py
+[mwdoc_test]: https://raw.github.com/jcfr/mwdoc/master/mwdoc_test.py
 
