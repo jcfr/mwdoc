@@ -69,7 +69,7 @@ Prerequisites
 
 * [mwclient][mwclient], the client to [MediaWiki API][mwapi]
 
- `sudo easy_install http://pypi.python.org/packages/2.6/m/mwclient/mwclient-0.6.5-py2.6.egg`
+ `pip install mwclient`
 
 Installation
 ------------

@@ -69,7 +69,7 @@ class Documentation(object):
             if self.VERBOSE:
                 print "[WARNING] Skip versioning: Source page doesn't exist: '%s'" % pageFullPath
             return False
-        text = sourcePage.edit()
+        text = sourcePage.text()
         return self.createPage(targetVersion, pageBaseName, text, prefix = prefix, summary = sourceVersion + ' -> ' + targetVersion)
     
     def listPages(self, prefix, namespace = None):
