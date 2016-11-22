@@ -4,18 +4,27 @@ Mwdoc
 Overview
 --------
 
-Think of [mwdoc][mwdoc] as a tool that allows to easily version mediawiki pages.
+Think of [mwdoc](https://pypi.python.org/pypi/mwdoc) as a tool that allows to easily version mediawiki pages.
 
 For example, pages like:
 
     Documentation/0.2/mypage
     Template:Documentation/0.2/mytemplate
 
-... could be automatically created from:
+... can be automatically created from:
 
     Documentation/0.1/mypage
     Template:Documentation/0.1/mytemplate
 
+
+Installation
+------------
+
+Installing `mwdoc` will automatically install the required dependencies.
+
+```
+pip install mwdoc
+```
 
 Usage
 -----
@@ -24,7 +33,7 @@ Usage
 
 ``` python
 import mwdoc
-doc = mwdoc.Documentation('somewhere.org', '/wiki/')
+doc = mwdoc.Documentation('somewhere.org', '/w/')
 doc.login('john', 'password')
 doc.createPage('0.1', 'mypage', 'This is content of my page', 'Documentation')
 doc.createPage('0.1', 'mytemplate', 'This is content of my template', 'Template:Documentation')
@@ -35,7 +44,7 @@ doc.createPage('0.1', 'mytemplate', 'This is content of my template', 'Template:
 
 ``` python
 import mwdoc
-doc = mwdoc.Documentation('somewhere.org', '/wiki/')
+doc = mwdoc.Documentation('somewhere.org', '/w/')
 doc.login('john', 'password')
 doc.versionPages('0.1', '0.2', ['Documentation', 'Template:Documentation'])
 ```
@@ -45,38 +54,31 @@ doc.versionPages('0.1', '0.2', ['Documentation', 'Template:Documentation'])
 
 ``` python
 import mwdoc
-doc = mwdoc.Documentation('somewhere.org', '/wiki/')
+doc = mwdoc.Documentation('somewhere.org', '/w/')
 doc.login('john', 'password')
 pages = doc.listPages('Documentation')
-for page in pages: print page
+for page in pages:
+   print(page)
 templatepages = doc.listPages('Template:Documentation')
-for page in templatepages: print page
+for page in templatepages:
+   print(page)
 ```
 
 * Delete pages:
 
 ``` python
 import mwdoc
-doc = mwdoc.Documentation('somewhere.org', '/wiki/')
+doc = mwdoc.Documentation('somewhere.org', '/w/')
 doc.login('john', 'password')
 pages = doc.listPages('Documentation')
 for page in pages: 
-  page.delete()
+    page.delete()
 ```
 
-Prerequisites
--------------
-
-* [mwclient][mwclient], the client to [MediaWiki API][mwapi]
-
- `pip install mwclient`
-
-Installation
+Dependencies
 ------------
 
-* [Download mwdoc.py][mwdoc]
-
- `wget https://raw.github.com/jcfr/mwdoc/mwdoc/master/mwdoc.py`
+* [mwclient][mwclient], the client to [MediaWiki API][mwapi]
 
 
 Test
@@ -97,7 +99,7 @@ python -m unittest test_mwdoc
 It will then ask for:
 
 * Hostname (e.g `localhost`)
-* Path (e.g `/wiki/`)
+* Path (e.g `/w/`)
 * Username
 * Password
 
@@ -114,11 +116,66 @@ Once you've made your great commits:
 5. That's it!
 
 
+Make a new release
+------------------
+
+A core developer should use the following steps to create a release of **mwdoc**.
+
+0. Configure `~/.pypirc` as described [here](https://packaging.python.org/distributing/#uploading-your-project-to-pypi).
+
+1. Make sure that all tests are passing.
+
+2. Tag the release. Requires a GPG key with signatures. For version *X.Y.Z*:
+
+```bash
+git tag -s -m "mwdoc X.Y.Z" X.Y.Z upstream/master
+```
+
+3. Create the source tarball and binary wheels:
+
+```bash
+git checkout master
+git fetch upstream
+git reset --hard upstream/master
+rm -rf dist/
+python setup.py sdist bdist_wheel
+```
+
+4. Upload the packages to the testing PyPI instance::
+
+```bash
+twine upload --sign -r pypitest dist/*
+```
+
+5. Check the [PyPI testing package page](https://testpypi.python.org/pypi/mwdoc/).
+
+6. Upload the packages to the PyPI instance::
+
+```bash
+twine upload --sign dist/*
+```
+
+7. Check the [PyPI package page](https://pypi.python.org/pypi/mwdoc/).
+
+8. Make sure the package can be installed::
+
+```bash
+mkvirtualenv test-pip-install
+pip install mwdoc
+rmvirtualenv test-pip-install
+```
+
+Credits
+-------
+
+Please see the GitHub project page at https://github.com/jcfr/mwdoc/graphs/contributors
+
 Meta
 ----
 
+* PyPI: <https://pypi.python.org/pypi/mwdoc>
 * Code: `git clone git://github.com/jcfr/mwdoc.git`
-* Home: <http://jcfr.github.com>
+* Home: <http://github.com/jcfr/mwdoc#readme>
 * Bugs: <http://github.com/jcfr/mwdoc/issues>
 
 License
@@ -140,5 +197,4 @@ limitations under the License.
 [is]: http://github.com/jcfr/mwdoc/issues
 [mwclient]: http://sourceforge.net/apps/mediawiki/mwclient
 [mwapi]: https://www.mediawiki.org/wiki/API
-[mwdoc]: https://raw.github.com/jcfr/mwdoc/master/mwdoc/mwdoc.py
 

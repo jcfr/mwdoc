@@ -6,6 +6,10 @@ mwdoc allows to easily version mediawiki pages.
 
 import mwclient
 
+from ._version import get_versions
+__version__ = get_versions()['version']
+del get_versions
+
 class Documentation(object):
 
     N_MAIN = '0'
@@ -47,13 +51,13 @@ class Documentation(object):
         page = self.site.Pages[pageFullPath]
         if page.exists:
             if self.VERBOSE:
-                print "[WARNING] Skip page creation: Page already exists: '%s'" % pageFullPath
+                print("[WARNING] Skip page creation: Page already exists: '%s'" % pageFullPath)
             return False
         if not summary:
             summary = 'Create page %s' % pageFullPath
         page.save(text, summary = summary)
         if self.VERBOSE:
-            print "[INFO] Page successfully created: '%s'" % pageFullPath
+            print("[INFO] Page successfully created: '%s'" % pageFullPath)
         return True
 
     def versionPage(self, sourceVersion, targetVersion, pageBaseName, prefix = ''):
@@ -72,7 +76,7 @@ class Documentation(object):
         sourcePage = self.site.Pages[pageFullPath]
         if not sourcePage.exists:
             if self.VERBOSE:
-                print "[WARNING] Skip versioning: Source page doesn't exist: '%s'" % pageFullPath
+                print("[WARNING] Skip versioning: Source page doesn't exist: '%s'" % pageFullPath)
             return False
         text = sourcePage.text()
         return self.createPage(targetVersion, pageBaseName, text, prefix = prefix, summary = sourceVersion + ' -> ' + targetVersion)

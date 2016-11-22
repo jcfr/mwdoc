@@ -1,0 +1,7 @@
+include mwdoc/_version.py
+include requirements.txt
+include requirements-dev.txt
+include mwdoc/_version.py
+include test_mwdoc.py
+include versioneer.py
+include README.md
