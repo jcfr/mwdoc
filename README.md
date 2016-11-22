@@ -76,16 +76,30 @@ Installation
 
 * [Download mwdoc.py][mwdoc]
 
- `wget https://raw.github.com/jcfr/mwdoc/master/mwdoc.py`
+ `wget https://raw.github.com/jcfr/mwdoc/mwdoc/master/mwdoc.py`
 
 
 Test
 ----
 
-1. [Download mwdoc_test.py][mwdoc_test] (`wget https://raw.github.com/jcfr/mwdoc/master/mwdoc_test.py`)
-2. Place it along side with `mwdoc.py`
-3. Edit *host*, *path*, *username* and *password* in mwdoc_test.py 
-4. Run mwdoc.py (`$ python mwdoc.py`)
+Do **NOT** run this test against a production installation. We mean it.
+
+The test will create pages, version them and delete them afterward.
+
+To run the test:
+
+```
+git clone git://github.com/jcfr/mwdoc && cd $_
+pip install -r requirements.txt
+python -m unittest test_mwdoc
+```
+
+It will then ask for:
+
+* Hostname (e.g `localhost`)
+* Path (e.g `/wiki/`)
+* Username
+* Password
 
 
 Contributing
@@ -126,6 +140,5 @@ limitations under the License.
 [is]: http://github.com/jcfr/mwdoc/issues
 [mwclient]: http://sourceforge.net/apps/mediawiki/mwclient
 [mwapi]: https://www.mediawiki.org/wiki/API
-[mwdoc]: https://raw.github.com/jcfr/mwdoc/master/mwdoc.py
-[mwdoc_test]: https://raw.github.com/jcfr/mwdoc/master/mwdoc_test.py
+[mwdoc]: https://raw.github.com/jcfr/mwdoc/master/mwdoc/mwdoc.py
 
