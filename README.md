@@ -195,6 +195,6 @@ limitations under the License.
 
 [fk]: http://help.github.com/forking/
 [is]: http://github.com/jcfr/mwdoc/issues
-[mwclient]: http://sourceforge.net/apps/mediawiki/mwclient
+[mwclient]: https://github.com/mwclient/mwclient
 [mwapi]: https://www.mediawiki.org/wiki/API
 
